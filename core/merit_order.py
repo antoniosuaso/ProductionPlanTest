@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from models.payload import PayloadModel
 from models.power_plant import PowerPlantType
-from constants import CO2_EMISSIONS_STATISTIC_GAS, CO2_EMISSIONS_STATISTIC_KEROSINE
+from constants import CO2_EMISSIONS_STATISTIC_GAS
 
 
 # Calculate the merit order based on efficiency and costs
@@ -19,10 +19,9 @@ def merit_order_sort(data: PayloadModel):
                 merit_value = (data.fuels["gas(euro/MWh)"] / plant.efficiency) + (
                     data.fuels["co2(euro/ton)"] * CO2_EMISSIONS_STATISTIC_GAS
                 )
-            # jet cost = (jet price / jet plant efficiency) + (co2 emitions price / average co2 emitions)
+            # jet cost = (jet price / jet plant efficiency)
             elif plant.type == PowerPlantType.JET:
-                merit_value = (data.fuels["kerosine(euro/MWh)"] / plant.efficiency) + (
-                    data.fuels["co2(euro/ton)"] * CO2_EMISSIONS_STATISTIC_KEROSINE
+                merit_value = (data.fuels["kerosine(euro/MWh)"] / plant.efficiency)
                 )
             # Wind cost = 0
             elif plant.type == PowerPlantType.WIND:

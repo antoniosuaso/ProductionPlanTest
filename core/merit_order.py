@@ -22,7 +22,6 @@ def merit_order_sort(data: PayloadModel):
             # jet cost = (jet price / jet plant efficiency)
             elif plant.type == PowerPlantType.JET:
                 merit_value = (data.fuels["kerosine(euro/MWh)"] / plant.efficiency)
-                )
             # Wind cost = 0
             elif plant.type == PowerPlantType.WIND:
                 merit_value = 0
